@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block content %}
+     <form action="" method="post">
+       {{ form.csrf_token }}
+       <table>
+           {{ render_field(form.word, size=50) }}
+       </table>
+    </form>
+    {% if search_word %}
+        <h3>{{ search_word }}</h3>
+    {% endif %}
+    {% if meanings %}
+        {% for meaning in meanings %}
+            <p> {{ meaning }}</p>
+        {% endfor %}
+    {% endif %}
+    <ul>
+        {% if matches %}
+            <h3>Do you mean:</h3>
+            {% for match in matches %}
+                <li><a href="{{ url_for('index', q=match) }}">{{ match }}</a></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+{% endblock %}
